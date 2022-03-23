@@ -28,6 +28,28 @@ router.get("/:id", (req, res) => {
     res.json({user: user})
   })
 
+router.post("/", (req,res) => {
+const user = {
+    id: data.users.length+1,
+    email: req.body.email
+}
+data.users.push(user)
+res.json({user:user})
+})
+
+router.patch("/:id",(req,res) => {
+    const user = data.users.find(user => user.id == req.params.id)
+    if (!user){
+        res.status(404)
+        res.json({error:"user does not exist"})
+        return
+    }
+    if (req.body.email){
+        user.email = req.body.email
+    }
+    res.json({user:user})
+})
+
 router.delete( "/:id", (req, res) => {
     const userToDelete = data.users.find(user => user.id == req.params.id)
     if (!userToDelete) {
