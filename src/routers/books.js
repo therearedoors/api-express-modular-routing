@@ -38,6 +38,11 @@ router.get("/:id", (req, res) => {
 })
 
 router.post("/", (req,res) => {
+if (data.books.find(book => book.title == req.body.title)){
+    res.status(400)
+    res.json({error:"book already in database"})
+    return
+}
 const book = {
     id: data.books.length+1,
     title: req.body.title,
